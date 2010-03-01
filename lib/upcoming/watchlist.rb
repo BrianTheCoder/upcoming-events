@@ -18,7 +18,7 @@ module Upcoming
     #
     def self.list(token, query={})
       query.merge!({:method => 'watchlist.getList'})
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.watchlist
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.watchlist
     end
     
     # Add an event to a user's watchlist. This function will delete an existing watchlist setting and replace it with the new one, so you don't have to call watchlist.remove first.
@@ -38,7 +38,7 @@ module Upcoming
       body = {:method => 'watchlist.add', :token => token, :event_id => event_id, :status => status}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.watchlist
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.watchlist
     end
     
     # Remove a watchlist record from a user's watchlist.
@@ -55,7 +55,7 @@ module Upcoming
       body = {:method => 'watchlist.remove', :token => token, :watchlist_id => watchlist_id}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
     end
   end
 end

@@ -13,7 +13,7 @@ begin
     gem.rubyforge_project = "upcoming-events"
     gem.files             = FileList["[A-Z]*", "{examples,lib,test}/**/*"]
     
-    gem.add_dependency('mash', '0.0.3')
+    gem.add_dependency('hashie', '0.1.3')
     gem.add_dependency('httparty', '0.4.3')
     
     gem.add_development_dependency('thoughtbot-shoulda')

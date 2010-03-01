@@ -34,7 +34,7 @@ class EventTest < Test::Unit::TestCase
         stub_post "http://upcoming.yahooapis.com/services/rest/?", 'new_event.xml'
         stub_get "http://upcoming.yahooapis.com/services/rest/?method=event.getInfo&event_id=1&token=1234567890123456789012345678901234467890&api_key=OU812&format=json", 'new_event.json'
         
-        event_info = Mash.new
+        event_info = Hashie::Mash.new
         event_info.name = "Tori Amos, Ben Folds"
         event_info.venue_id = 1
         event_info.category_id = 1
@@ -51,7 +51,7 @@ class EventTest < Test::Unit::TestCase
         stub_post "http://upcoming.yahooapis.com/services/rest/?", 'new_event.xml'
         stub_get "http://upcoming.yahooapis.com/services/rest/?method=event.getInfo&event_id=1&token=1234567890123456789012345678901234467890&api_key=OU812&format=json", 'saved_event.json'
         
-        event_info = Mash.new
+        event_info = Hashie::Mash.new
         event_info.name = "Tori Amos, Ben Folds"
         event_info.venue_id = 1
         event_info.category_id = 1

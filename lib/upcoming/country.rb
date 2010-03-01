@@ -7,7 +7,7 @@ module Upcoming
     #
     def self.info(country_id)
       country_id = country_id.join(',') if country_id.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'country.getInfo', :country_id => country_id}.merge(Upcoming.default_options))).rsp.country
+      Hashie::Mash.new(self.get('/', :query => {:method => 'country.getInfo', :country_id => country_id}.merge(Upcoming.default_options))).rsp.country
     end
   end
 end

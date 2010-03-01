@@ -9,7 +9,7 @@ module Upcoming
     # 
     def self.info(user_id)
       user_id = user_id.join(',') if user_id.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'user.getInfo', :user_id => user_id}.merge(Upcoming.default_options))).rsp.user
+      Hashie::Mash.new(self.get('/', :query => {:method => 'user.getInfo', :user_id => user_id}.merge(Upcoming.default_options))).rsp.user
     end
     
     # Retrieve the details about a user by username/screenname.
@@ -19,7 +19,7 @@ module Upcoming
     # 
     def self.info_by_username(username)
       username = username.join(',') if username.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'user.getInfoByUsername', :username => username}.merge(Upcoming.default_options))).rsp.user
+      Hashie::Mash.new(self.get('/', :query => {:method => 'user.getInfoByUsername', :username => username}.merge(Upcoming.default_options))).rsp.user
     end
     
     # Retrieve the details about a user by email
@@ -29,7 +29,7 @@ module Upcoming
     # 
     def self.info_by_email(email)
       email = email.join(',') if email.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'user.getInfoByEmail', :email => email}.merge(Upcoming.default_options))).rsp.user
+      Hashie::Mash.new(self.get('/', :query => {:method => 'user.getInfoByEmail', :email => email}.merge(Upcoming.default_options))).rsp.user
     end
     
     # Retrieve a list of metros for a particular user.
@@ -38,7 +38,7 @@ module Upcoming
     # An authentication token.
     def self.metro_list(token)
       token = Upcoming::Auth.token_code(token)
-      Mash.new(self.get('/', :query => {:method => 'user.getMetroList', :token => token}.merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => {:method => 'user.getMetroList', :token => token}.merge(Upcoming.default_options))).rsp.metro
     end
     
     # Gets all events in the watchlist for a user. You may optionally pass authentication parameters for this function to get back private events from people who have authenticated user as a friend. The 'username' returned is the username of the watchlist owner. It also returns either status="attend" or status="watch". Watchlists for personal events that are created by friends of the user authenticated are shown.
@@ -60,7 +60,7 @@ module Upcoming
       token = Upcoming::Auth.token_code(token)
       query = {:method => 'user.getWatchlist', :show => show}
       query.merge!(:token => token) if token
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
     end
     
     # Retrieve the events being watched/attended by a user's friends. These events can either be public or created by a person who calls the user a friend.
@@ -76,7 +76,7 @@ module Upcoming
     def self.friends_events(token, per_page=100, page=1)
       token = Upcoming::Auth.token_code(token)
       query = {:method => 'user.getMyFriendsEvents', :per_page => per_page, :page => page}
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
     end
       
   end

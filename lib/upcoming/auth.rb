@@ -8,7 +8,7 @@ module Upcoming
     # The frob passed back to your application.
     #
     def self.token(frob)
-      Mash.new(self.get('/', :query => {:method => 'auth.getToken', :frob => frob}.merge(Upcoming.default_options))).rsp.token.first
+      Hashie::Mash.new(self.get('/', :query => {:method => 'auth.getToken', :frob => frob}.merge(Upcoming.default_options))).rsp.token.first
     end
     
     # Retrieve a full token from Upcoming, from just the token code. 
@@ -27,7 +27,7 @@ module Upcoming
     #
     def self.check_token(token)
       token = Upcoming::Auth.token_code(token)
-      Mash.new(self.get('/', :query => {:method => 'auth.checkToken', :token => token}.merge(Upcoming.default_options))).rsp.token.first
+      Hashie::Mash.new(self.get('/', :query => {:method => 'auth.checkToken', :token => token}.merge(Upcoming.default_options))).rsp.token.first
     end
     
     # Extracts the token code from a token hash

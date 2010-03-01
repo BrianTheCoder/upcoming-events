@@ -16,7 +16,7 @@ module Upcoming
       query = {:method => 'event.getInfo', :event_id => event_id}
       query.merge!(:token => token) unless token.blank?
       format :json
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.event
     end
     
     # Add a new event to the database. This method requires authentication.
@@ -74,7 +74,7 @@ module Upcoming
       body.merge!(info)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      event = Mash.new(self.post('/', :body => body)).rsp.event
+      event = Hashie::Mash.new(self.post('/', :body => body)).rsp.event
       self.info(event.id, token).first
     end
     
@@ -136,7 +136,7 @@ module Upcoming
       body.merge!(event)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      event = Mash.new(self.post('/', :body => body)).rsp.event
+      event = Hashie::Mash.new(self.post('/', :body => body)).rsp.event
       self.info(event.id, token).first
     end
     
@@ -161,7 +161,7 @@ module Upcoming
       body.merge!({:event_id => event_id, :tags => tag_list})
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      event = Mash.new(self.post('/', :body => body)).rsp.event
+      event = Hashie::Mash.new(self.post('/', :body => body)).rsp.event
       self.info(event.id, token).first
     end
     
@@ -185,7 +185,7 @@ module Upcoming
       body.merge!({:event_id => event_id, :tag => tag})
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      event = Mash.new(self.post('/', :body => body)).rsp.event
+      event = Hashie::Mash.new(self.post('/', :body => body)).rsp.event
       self.info(event.id, token).first
     end
     
@@ -289,7 +289,7 @@ module Upcoming
     # An authentication token. 
     #
     def self.search(options={})
-      Mash.new(self.get('/', :query => {:method => 'event.search'}.merge(options).merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => {:method => 'event.search'}.merge(options).merge(Upcoming.default_options))).rsp.event
     end
     
     # Get a watchlist for an event. You must pass authentication parameters for this function. 
@@ -304,7 +304,7 @@ module Upcoming
     #
     def self.watch_list(event_id, token)
       query = {:method => 'event.getWatchList', :token => token, :event_id => event_id }
-      Mash.new(self.get('/', :query => query.merge(options).merge(Upcoming.default_options))).rsp.user
+      Hashie::Mash.new(self.get('/', :query => query.merge(options).merge(Upcoming.default_options))).rsp.user
     end
     
     # For a given event_id, retrieve group information and metadata for 
@@ -318,7 +318,7 @@ module Upcoming
     #
     def self.groups(event_id, token)
       query = {:method => 'event.getGroups', :token => token, :event_id => event_id }
-      Mash.new(self.get('/', :query => query.merge(options).merge(Upcoming.default_options))).rsp.group
+      Hashie::Mash.new(self.get('/', :query => query.merge(options).merge(Upcoming.default_options))).rsp.group
       
     end
     
@@ -372,7 +372,7 @@ module Upcoming
     #     * - featured (Retrieve the events in my area that look interesting)
     #   
     def self.best_in_place(query={})
-      Mash.new(self.get('/', :query => {:method => 'event.getBestInPlace'}.merge(options).merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => {:method => 'event.getBestInPlace'}.merge(options).merge(Upcoming.default_options))).rsp.event
     end
   end
 end

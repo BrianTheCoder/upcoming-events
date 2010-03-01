@@ -15,7 +15,7 @@ module Upcoming
       token = token['token'] if token and token['token']
       query = {:method => 'group.getInfo', :group_id => group_id}
       query.merge!(:token => token) if token
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.group
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.group
     end
     
     # Retrieve group member user information and metadata for any public group or private group that the authenticated user is a member of.
@@ -44,7 +44,7 @@ module Upcoming
       opts[:membersPerPage] = opts.delete(:members_per_page) if opts[:members_per_page]
       token = token['token'] if token and token['token']
       query = {:method => 'group.getMembers', :group_id => group_id, :token => token}
-      Mash.new(self.get('/', :query => query.merge(opts).merge(Upcoming.default_options))).rsp.user
+      Hashie::Mash.new(self.get('/', :query => query.merge(opts).merge(Upcoming.default_options))).rsp.user
     end
     
     # Retrieve group event information and metadata for any public group or private group that the authenticated user is a member of.
@@ -75,7 +75,7 @@ module Upcoming
       opts[:eventsPerPage] = opts.delete(:events_per_page) if opts[:events_per_page]
       token = token['token'] if token and token['token']
       query = {:method => 'group.getEvents', :group_id => group_id, :token => token}
-      Mash.new(self.get('/', :query => query.merge(opts).merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => query.merge(opts).merge(Upcoming.default_options))).rsp.event
     end
     
     # Retrieve group information and metadata for all groups that the authenticated user is a member of. This method requires authentication.
@@ -83,7 +83,7 @@ module Upcoming
     # +token+ (Required)
     # An authentication token.
     def self.my_groups(token)
-      Mash.new(self.get('/', :query => {:method => 'getMyGroups', :token => token}.merge(Upcoming.default_options))).rsp.event
+      Hashie::Mash.new(self.get('/', :query => {:method => 'getMyGroups', :token => token}.merge(Upcoming.default_options))).rsp.event
     end
     
     # Add a new group to the database. This method requires authentication.
@@ -112,7 +112,7 @@ module Upcoming
       body.merge!(info)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.group
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.group
     end
     
     # Edit a group. Only an admin of a group may edit it.This method requires authentication.
@@ -145,7 +145,7 @@ module Upcoming
       body.merge!(info)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.group
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.group
     end
     
     # Try to join a group. If the group is moderated, the request may be queued for administrator review instead of processed immediately. This method requires authentication.
@@ -161,7 +161,7 @@ module Upcoming
       body = {:method => 'group.join', :group_id => group_id,  :token => token}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.group
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.group
     end
     
     # Try to leave a group. If the user leaving was the last member of the group, the group is permanently deleted, and may not be rejoined. If the user who left was the last admin in the group, the user remaining with the earliest join timestamp becomes an admin. This method requires authentication.
@@ -177,7 +177,7 @@ module Upcoming
       body = {:method => 'group.leave', :group_id => group_id,  :token => token}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
     end
     
     # Try to add an event to a group. If the group is moderated, the request may be queued for administrator review instead of processed immediately.This method requires authentication.
@@ -197,7 +197,7 @@ module Upcoming
       body = {:method => 'group.addEventTo', :group_id => group_id,  :event_id => event_id, :token => token}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.group
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.group
     end
     
     # Try to remove an event to a group. This method can only be called by an authenticated group admin, or by the user who added the event to the group. This method requires authentication.
@@ -217,8 +217,7 @@ module Upcoming
       body = {:method => 'group.removeEvent', :group_id => group_id, :event_id => event, :token => token}
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.stat == 'ok'
     end
-    
   end
 end

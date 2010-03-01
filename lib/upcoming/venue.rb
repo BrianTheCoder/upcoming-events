@@ -15,7 +15,7 @@ module Upcoming
       token = token['token'] if token and token['token']
       query = {:method => 'venue.getInfo', :venue_id => venue_id}
       query.merge!({:token => token}) if token
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.venue
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.venue
     end
     
     # Retrieve a list of venues for a particular metro.
@@ -31,7 +31,7 @@ module Upcoming
       token = token['token'] if token and token['token']
       query = {:method => 'venue.getList', :metro_id => metro_id}
       query.merge!({:token => token}) if token
-      Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.venue
+      Hashie::Mash.new(self.get('/', :query => query.merge(Upcoming.default_options))).rsp.venue
     end
     
     # Allows searching through venues.
@@ -72,7 +72,7 @@ module Upcoming
     # +sort+ (One of name-desc, name-asc, distance-asc, distance-desc, Default = name-asc)
     # The field and direction on which to sort the results. Distance sorts must ONLY be used if location is specified.
     def self.search(options={})
-      Mash.new(self.get('/', :query => {:method => 'venue.search'}.merge(options).merge(Upcoming.default_options))).rsp.venue
+      Hashie::Mash.new(self.get('/', :query => {:method => 'venue.search'}.merge(options).merge(Upcoming.default_options))).rsp.venue
     end
     
     # Add a new venue to the database. You must pass authentication parameters for this function.
@@ -118,7 +118,7 @@ module Upcoming
       body.merge!(info)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.venue
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.venue
     end
     
     # Edit a venue. Only the authenticated user that added the venue may edit it. You must pass authentication parameters for this function.
@@ -164,7 +164,7 @@ module Upcoming
       body.merge!(event)
       body.merge!(Upcoming.default_options)
       body.merge!({:format => 'xml'})
-      Mash.new(self.post('/', :body => body)).rsp.venue
+      Hashie::Mash.new(self.post('/', :body => body)).rsp.venue
     end
   end
 end

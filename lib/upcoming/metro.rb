@@ -9,7 +9,7 @@ module Upcoming
     #
     def self.info(metro_id)
       metro_id = metro_id.join(',') if metro_id.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'metro.getInfo', :metro_id => metro_id}.merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getInfo', :metro_id => metro_id}.merge(Upcoming.default_options))).rsp.metro
     end
     
     # Retrieve the single record of the most popular metro in the area of a latitude and longitude coordinate. Will return a 404 Not Found if one cannot be found. Only the US and some of Canada is currently supported. To get a Lat/Lon from a street address, try Yahoo!'s Geocoding API. Useful for adding new venues.
@@ -21,7 +21,7 @@ module Upcoming
     # Longitude coordinate.
     #
     def self.for_latitude_and_longitude(latitude, longitude)
-      Mash.new(self.get('/', :query => {:method => 'metro.getForLatLon', :latitude => latitude, :longitude => longitude}.merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getForLatLon', :latitude => latitude, :longitude => longitude}.merge(Upcoming.default_options))).rsp.metro
     end
     
     # Searches for metros whose name or "code" matches the search_text.
@@ -36,7 +36,7 @@ module Upcoming
     # The state_id of the event, used to narrow down the responses. To get a state_id, try the metro.getStateList function.
     #
     def self.search(query={})
-      Mash.new(self.get('/', :query => query.merge({:method => 'metro.search'}).merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => query.merge({:method => 'metro.search'}).merge(Upcoming.default_options))).rsp.metro
     end
     
     # Retrieve a list of metros for a particular state.
@@ -46,7 +46,7 @@ module Upcoming
     #
     def self.my_list(token)
       token = Upcoming::Auth.token_code(token)
-      Mash.new(self.get('/', :query => {:method => 'metro.getMyList', :token => token}.merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getMyList', :token => token}.merge(Upcoming.default_options))).rsp.metro
     end
     
     # Retrieve a list of metros for a particular state.
@@ -56,7 +56,7 @@ module Upcoming
     #
     def self.list(state_id)
       state_id = state_id.join(',') if state_id.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'metro.getList', :state_id => state_id}.merge(Upcoming.default_options))).rsp.metro
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getList', :state_id => state_id}.merge(Upcoming.default_options))).rsp.metro
     end
     
     # Retrieve a list of states for a particular country.
@@ -66,13 +66,13 @@ module Upcoming
     #
     def self.state_list(country_id)
       country_id = country_id.join(',') if country_id.is_a?(Array)
-      Mash.new(self.get('/', :query => {:method => 'metro.getStateList', :country_id => country_id}.merge(Upcoming.default_options))).rsp.state
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getStateList', :country_id => country_id}.merge(Upcoming.default_options))).rsp.state
     end
     
     # Retrieve a list of all countries in the database.
     #
     def self.country_list
-      Mash.new(self.get('/', :query => {:method => 'metro.getCountryList'}.merge(Upcoming.default_options))).rsp.country
+      Hashie::Mash.new(self.get('/', :query => {:method => 'metro.getCountryList'}.merge(Upcoming.default_options))).rsp.country
     end    
   end
 end

@@ -1,9 +1,9 @@
 require 'rubygems'
 
-gem 'mash', '~> 0.0.3'
-require 'mash'
+gem 'hashie', '>= 0.1.3'
+require 'hashie'
 
-gem 'httparty', '~> 0.4.3'
+gem 'httparty', '>= 0.5.0'
 require 'httparty'
 
 module Upcoming
